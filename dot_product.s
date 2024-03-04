@@ -1,6 +1,9 @@
 .data
     a:  .word 1, 2, 3, 4, 5
     b:  .word 6, 7, 8, 9, 10
+    text: .asciiz "The dot product is: "
+    newline: .asciiz "\n"
+
 
 .text
     .globl main
@@ -9,15 +12,15 @@ main:
     li x6, 0             # i = 0
     li x7, 0             # sop = 0
 
-    la x9, a
-    la x21, b
+    la x8, a
+    la x9, b
 
 loop:
     bge x6, x5, exit
 
     slli x18, x6, 2      # x18 = i * 4
-    add x19, x9, x18     # add i * 4 to the base address off a amd put it to x19
-    add x20, x21, x18    # add i * 4 to the base address off b amd put it to x20
+    add x19, x8, x18     # add i * 4 to the base address off a amd put it to x19
+    add x20, x9, x18     # add i * 4 to the base address off b amd put it to x20
 
     lw x22, 0(x19)       # x22 = a[i]
     lw x23, 0(x20)       # x23 = b[i]
@@ -28,9 +31,17 @@ loop:
     j loop
 
 exit:
+    li a0, 4
+    la a1, text          # Print text
+    ecall
+
     li a0, 1
     mv a1, x7            # Print sop
     ecall
 
-    li a0, 10            # Prepare to exit
-    ecall                # Exit
+    li a0, 4
+    la a1, newline       # Print newline
+    ecall
+
+    li a0, 10            # Exit
+    ecall
