@@ -32,12 +32,11 @@ main:
     ecall
 
 dot_product_recursive:
-    addi sp sp -16
+    addi sp sp -12
 
-    # save a0, a1, a2 and ra on to the stack
-    sw a0 12(sp) # Store &a[0]
-    sw a1 8(sp)  # Store &b[0]
-    sw a2 4(sp)  # Store size
+    # save a0, a1 and ra on to the stack
+    sw a0 8(sp) # Store &a[0]
+    sw a1 4(sp)  # Store &b[0]
     sw ra 0(sp)  # Store ra
 
     bne a2 t0 return # if size != 1 then return a[0]*b[0] + dot_product_recursive(a+1, b+1, size-1);
@@ -47,7 +46,7 @@ dot_product_recursive:
     lw t2, 0(a1)
     mul a0, t1, t2
 
-    addi sp sp 16
+    addi sp sp 12
     jr ra
 
 return:
@@ -59,8 +58,8 @@ return:
     jal dot_product_recursive # dot_product_recursive(a+1, b+1, size-1);
 
     # restore a0, a1 and ra on to the stack
-    lw t1 12(sp) # Load &a[0] (a0)
-    lw t2 8(sp)  # Load &b[0] (a1)
+    lw t1 8(sp) # Load &a[0] (a0)
+    lw t2 4(sp)  # Load &b[0] (a1)
     lw ra 0(sp)  # Load ra
 
     # load a[0] and b[0]
@@ -71,6 +70,5 @@ return:
     mul x20, t1, t2
     add a0 a0 x20
 
-    addi sp sp 16
+    addi sp sp 12
     jr ra
-
