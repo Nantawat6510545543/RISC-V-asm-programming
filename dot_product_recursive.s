@@ -40,7 +40,7 @@ dot_product_recursive:
     sw a2 4(sp)  # Store size
     sw ra 0(sp)  # Store ra
 
-    bne a2 t0 recursion # if size != 1 then recursion
+    bne a2 t0 return # if size != 1 then return a[0]*b[0] + dot_product_recursive(a+1, b+1, size-1);
 
     # a0 = a[0] * b[0]
     lw t1, 0(a0)
@@ -50,7 +50,7 @@ dot_product_recursive:
     addi sp sp 16
     jr ra
 
-recursion:
+return:
     # a[0]*b[0] + dot_product_recursive(a+1, b+1, size-1);
     addi a0 a0 4  # &a[0] + 4
     addi a1 a1 4  # &b[0] + 4
