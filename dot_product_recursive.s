@@ -15,39 +15,38 @@ main:
 
     jal dot_product_recursive
 
-    mv x30, a0     # result = a0
+    mv t3, a0 # result = a0
 
     # printf("The dot product is: %d\n", result);
     li a0 4
     la a1 text
     ecall
-    mv a1 x30
     li a0 1
+    mv a1 t3
     ecall
     li a0 4
     la a1 newline
     ecall
 
-    li a0 10       # Exit
+    li a0 10 # Exit
     ecall
 
 dot_product_recursive:
-    addi sp sp -12
+    beq a2 t0 base_case # if size == 1 then base case
 
     # save a0, a1 and ra on to the stack
+    addi sp sp -12
     sw a0 8(sp)  # Store &a[0]
     sw a1 4(sp)  # Store &b[0]
     sw ra 0(sp)  # Store ra
 
-    beq a2 t0 base_case # if size == 1 then base case
-
+    # passing the three arguments to a0 + 4 , a1 +4  and a2 -1
     addi a0 a0 4  # &a[0] + 4
     addi a1 a1 4  # &b[0] + 4
     addi a2 a2 -1 # size - 1
-
     jal dot_product_recursive # dot_product_recursive(a+1, b+1, size-1);
 
-    # restore a0, a1 and ra on to the stack
+    # load data on the stack
     lw t1 8(sp)  # Load &a[0]
     lw t2 4(sp)  # Load &b[0]
     lw ra 0(sp)  # Load ra
@@ -57,8 +56,8 @@ dot_product_recursive:
     lw t2 0(t2)
 
     # a0 += a[0] * b[0]
-    mul x20, t1, t2
-    add a0 a0 x20
+    mul t1 t1 t2
+    add a0 a0 t1
 
     addi sp sp 12
     jr ra
@@ -68,7 +67,4 @@ base_case:
     lw t1 0(a0)
     lw t2 0(a1)
     mul a0 t1 t2
-
-    addi sp sp 12
     jr ra
-    
