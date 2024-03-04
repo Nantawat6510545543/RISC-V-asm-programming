@@ -28,9 +28,9 @@ mult:
 
     jal mult # mult(a, b-1)
 
-    lw t1 4(sp) # Load a form mult(a, b-1)
+    lw t1 4(sp) # Load a
     lw ra 0(sp) # Load ra
-    add a0 a0 t1 # a0 += mult(a, b-1)
+    add a0 a0 t1 # a0 = mult(a, b-1) + a
 
     addi sp sp 8
     jr ra
