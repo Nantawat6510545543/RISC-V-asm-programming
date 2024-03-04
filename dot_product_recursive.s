@@ -18,14 +18,14 @@ main:
     mv x30, a0     # result = a0
 
     # printf("The dot product is: %d\n", result);
-    li a0, 4
-    la a1, text
+    li a0 4
+    la a1 text
     ecall
     mv a1 x30
     li a0 1
     ecall
-    li a0, 4
-    la a1, newline
+    li a0 4
+    la a1 newline
     ecall
 
     li a0 10       # Exit
@@ -42,9 +42,9 @@ dot_product_recursive:
     bne a2 t0 return # if size != 1 then return a[0]*b[0] + dot_product_recursive(a+1, b+1, size-1);
 
     # a0 = a[0] * b[0]
-    lw t1, 0(a0)
-    lw t2, 0(a1)
-    mul a0, t1, t2
+    lw t1 0(a0)
+    lw t2 0(a1)
+    mul a0 t1 t2
 
     addi sp sp 12
     jr ra
@@ -63,8 +63,8 @@ return:
     lw ra 0(sp)  # Load ra
 
     # load a[0] and b[0]
-    lw t1, 0(t1)
-    lw t2, 0(t2)
+    lw t1 0(t1)
+    lw t2 0(t2)
 
     # a0 += a[0] * b[0] | a0 += dot_product_recursive(a+1, b+1, size-1);
     mul x20, t1, t2

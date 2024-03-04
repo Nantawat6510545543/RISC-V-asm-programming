@@ -21,12 +21,12 @@ mult:
     sw a0 4(sp) # Store a
     sw ra 0(sp) # Store ra
 
-    addi a1 a1 -1 # b -= 1
+    addi a1 a1 -1  # b -= 1
     beq a1 t0 exit # if b == 1 then exit
 
     jal mult # mult(a, b-1)
 
-    lw t1 8(sp) # Load a0 | mult(a, b-1)
+    lw t1 4(sp) # Load a form mult(a, b-1)
     lw ra 0(sp) # Load ra
     add a0 a0 t1 # a0 += mult(a, b-1)
 
