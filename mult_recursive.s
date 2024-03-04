@@ -8,10 +8,12 @@ main:
 
     jal mult
 
+    # printf("%d\n", mult(110, 50));
     mv a1 a0
     li a0 1
     ecall
 
+    # exit
     li a0 10
     ecall
 
